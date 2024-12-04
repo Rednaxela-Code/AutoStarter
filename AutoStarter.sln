@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoStarter.Console", "AutoStarter.Console\AutoStarter.Console.csproj", "{C6B114C5-12B4-403D-9CAA-C820E8565054}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoStarter.Shared", "AutoStarter.Shared\AutoStarter.Shared.csproj", "{225DA76F-9664-47E4-A2BC-6F20FE3A598B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{C6B114C5-12B4-403D-9CAA-C820E8565054}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6B114C5-12B4-403D-9CAA-C820E8565054}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6B114C5-12B4-403D-9CAA-C820E8565054}.Release|Any CPU.Build.0 = Release|Any CPU
+		{225DA76F-9664-47E4-A2BC-6F20FE3A598B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{225DA76F-9664-47E4-A2BC-6F20FE3A598B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{225DA76F-9664-47E4-A2BC-6F20FE3A598B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{225DA76F-9664-47E4-A2BC-6F20FE3A598B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
