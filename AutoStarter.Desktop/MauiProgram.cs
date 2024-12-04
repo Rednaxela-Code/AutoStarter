@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using AutoStarter.Shared.Services;
+using AutoStarter.Shared.Services.IServices;
+using Microsoft.Extensions.Logging;
 
 namespace AutoStarter.Desktop
 {
@@ -15,6 +17,7 @@ namespace AutoStarter.Desktop
                 });
 
             builder.Services.AddMauiBlazorWebView();
+            builder.Services.AddScoped<IApplicationService, ApplicationService>();
 
 #if DEBUG
     		builder.Services.AddBlazorWebViewDeveloperTools();

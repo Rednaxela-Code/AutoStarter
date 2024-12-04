@@ -1,5 +1,6 @@
 ﻿@page "/"
 
+@using AutoStarter.Shared.Services.IServices
 @using global::AutoStarter.Shared.Models
 
 <body>
@@ -12,29 +13,27 @@
     <div class="table-container">
         <div class="table-header">Selected Software</div>
         <table class="entity-table" id="selected-entities">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Status</th>
-            </tr>
-            </thead>
-            <tbody></tbody>
+            <tbody>
+            @foreach (var item in _applicationsToStart!)
+            {
+                <tr>
+                    <td>@item.DisplayName</td>
+                </tr>
+            }
+            </tbody>
         </table>
     </div>
 
     <div class="table-container">
         <div class="table-header">Available Software</div>
         <table class="entity-table" id="available-entities">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Status</th>
-            </tr>
-            </thead>
             <tbody>
-            <!-- Sample entities -->
+            @foreach (var item in _applications!)
+            {
+            <tr>
+                <td>@item.DisplayName</td>
+            </tr>
+            }
             </tbody>
         </table>
     </div>
@@ -42,10 +41,13 @@
 </body>
 
 @code {
-    private List<RunApp>? _applications;
+    [Inject] 
+    public IApplicationService? ApplicationService { get; set; }
+    private List<Application>? _applications;
+    private List<Application>? _applicationsToStart = [];
 
     protected override async Task OnInitializedAsync()
     {
-        _applications = RunApp.GetInstalledApplications();
+        _applications = ApplicationService!.GetInstalledApplications();
     }
 }

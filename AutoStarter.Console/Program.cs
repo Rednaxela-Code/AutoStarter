@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using AutoStarter.Shared.Models;
 
-var installedApps = RunApp.GetInstalledApplications();
+var installedApps = Application.GetInstalledApplications();
 
 Console.WriteLine("Preinstalled Applications:");
 foreach (var app in installedApps)
@@ -13,4 +13,4 @@ foreach (var app in installedApps)
 Console.WriteLine("\nGive the name of the application you would like to install:");
 var appName = Console.ReadLine();
 
-RunApp.RunApplication(appName, installedApps);
+Application.RunApplication(appName, installedApps);
