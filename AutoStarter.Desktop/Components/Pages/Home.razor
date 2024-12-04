@@ -1,0 +1,51 @@
+﻿@page "/"
+
+@using global::AutoStarter.Shared.Models
+
+<body>
+<header class="header">
+    <h1>AutoStarter</h1>
+    <p>Drag and Drop Software Startup Manager</p>
+</header>
+
+<main class="container">
+    <div class="table-container">
+        <div class="table-header">Selected Software</div>
+        <table class="entity-table" id="selected-entities">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <div class="table-header">Available Software</div>
+        <table class="entity-table" id="available-entities">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Sample entities -->
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+
+@code {
+    private List<RunApp>? _applications;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _applications = RunApp.GetInstalledApplications();
+    }
+}

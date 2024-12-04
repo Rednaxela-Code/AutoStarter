@@ -1,8 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoStarter.Console", "AutoStarter.Console\AutoStarter.Console.csproj", "{C6B114C5-12B4-403D-9CAA-C820E8565054}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34714.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoStarter.Console", "AutoStarter.Console\AutoStarter.Console.csproj", "{C6B114C5-12B4-403D-9CAA-C820E8565054}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoStarter.Shared", "AutoStarter.Shared\AutoStarter.Shared.csproj", "{225DA76F-9664-47E4-A2BC-6F20FE3A598B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoStarter.Shared", "AutoStarter.Shared\AutoStarter.Shared.csproj", "{225DA76F-9664-47E4-A2BC-6F20FE3A598B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoStarter.Desktop", "AutoStarter.Desktop\AutoStarter.Desktop.csproj", "{F5F8A7DC-E9EF-4803-88B0-1A89C37D4DBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +23,14 @@ Global
 		{225DA76F-9664-47E4-A2BC-6F20FE3A598B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{225DA76F-9664-47E4-A2BC-6F20FE3A598B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{225DA76F-9664-47E4-A2BC-6F20FE3A598B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5F8A7DC-E9EF-4803-88B0-1A89C37D4DBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5F8A7DC-E9EF-4803-88B0-1A89C37D4DBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5F8A7DC-E9EF-4803-88B0-1A89C37D4DBC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F5F8A7DC-E9EF-4803-88B0-1A89C37D4DBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5F8A7DC-E9EF-4803-88B0-1A89C37D4DBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5F8A7DC-E9EF-4803-88B0-1A89C37D4DBC}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

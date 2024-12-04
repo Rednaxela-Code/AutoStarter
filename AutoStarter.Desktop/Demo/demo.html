@@ -1,0 +1,231 @@
+<html><head><base href="." /><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>AutoStarter - Entity Manager</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #34495e;
+            --accent: #3498db;
+            --light: #ecf0f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--light);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 2rem;
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .table-container {
+            flex: 1;
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .table-header {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .entity-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .entity-table th {
+            background: var(--secondary);
+            color: white;
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        .entity-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .entity-item {
+            cursor: move;
+            transition: background 0.3s;
+        }
+
+        .entity-item:hover {
+            background: #f5f5f5;
+        }
+
+        .dragging {
+            opacity: 0.5;
+            background: #e3f2fd;
+        }
+
+        .drag-over {
+            background: #bbdefb;
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+    <h1>AutoStarter</h1>
+    <p>Drag and Drop Entity Manager</p>
+</header>
+
+<main class="container">
+    <div class="table-container">
+        <div class="table-header">Selected Entities</div>
+        <table class="entity-table" id="selected-entities">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <div class="table-header">Available Entities</div>
+        <table class="entity-table" id="available-entities">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Sample entities -->
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Sample data - you can replace this with your actual data
+        const sampleEntities = [
+            { id: 1, name: 'Entity 1', type: 'Service', status: 'Active' },
+            { id: 2, name: 'Entity 2', type: 'Process', status: 'Inactive' },
+            { id: 3, name: 'Entity 3', type: 'Service', status: 'Active' },
+            { id: 4, name: 'Entity 4', type: 'Task', status: 'Pending' }
+        ];
+
+        const availableTable = document.getElementById('available-entities').getElementsByTagName('tbody')[0];
+        const selectedTable = document.getElementById('selected-entities').getElementsByTagName('tbody')[0];
+
+        // Populate available entities
+        sampleEntities.forEach(entity => {
+            const row = createEntityRow(entity);
+            availableTable.appendChild(row);
+        });
+
+        function createEntityRow(entity) {
+            const row = document.createElement('tr');
+            row.className = 'entity-item';
+            row.draggable = true;
+            row.dataset.entityId = entity.id;
+
+            row.innerHTML = `
+            <td>${entity.name}</td>
+            <td>${entity.type}</td>
+            <td>${entity.status}</td>
+        `;
+
+            // Add drag events
+            row.addEventListener('dragstart', handleDragStart);
+            row.addEventListener('dragend', handleDragEnd);
+            return row;
+        }
+
+        function handleDragStart(e) {
+            e.target.classList.add('dragging');
+            e.dataTransfer.setData('text/plain', e.target.dataset.entityId);
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+
+        // Add drop zones
+        [selectedTable, availableTable].forEach(table => {
+            table.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                const draggingRow = document.querySelector('.dragging');
+                if (draggingRow) {
+                    const closestRow = getClosestRow(table, e.clientY);
+                    if (closestRow) {
+                        table.insertBefore(draggingRow, closestRow);
+                    } else {
+                        table.appendChild(draggingRow);
+                    }
+                }
+            });
+
+            table.addEventListener('dragenter', (e) => {
+                e.preventDefault();
+                table.classList.add('drag-over');
+            });
+
+            table.addEventListener('dragleave', () => {
+                table.classList.remove('drag-over');
+            });
+
+            table.addEventListener('drop', (e) => {
+                e.preventDefault();
+                table.classList.remove('drag-over');
+            });
+        });
+
+        function getClosestRow(table, y) {
+            const rows = [...table.querySelectorAll('.entity-item:not(.dragging)')];
+
+            return rows.reduce((closest, row) => {
+                const box = row.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: row };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+    });
+</script>
+</body></html>

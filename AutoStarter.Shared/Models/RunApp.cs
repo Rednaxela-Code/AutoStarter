@@ -1,21 +1,22 @@
+using System.Diagnostics;
 using Microsoft.Win32;
 #pragma warning disable CA1416
 
 namespace AutoStarter.Shared.Models;
 
-public class Application
+public class RunApp
 {
-    public string? DisplayName { get; set; }
-    public string? Path { get; set; }
+    public string? DisplayName { get; private set; }
+    private string? Path { get; set; }
     public string? InstallationLocation { get; set; }
 
-    public Application()
+    private RunApp()
     {
     }
     
-    public static List<Application> GetInstalledApplications()
+    public static List<RunApp> GetInstalledApplications()
     {
-        var applications = new List<Application>();
+        var applications = new List<RunApp>();
  
         var registryKeys = new[]
         {
@@ -30,7 +31,7 @@ public class Application
 
             foreach (var subkeyName in key.GetSubKeyNames())
             {
-                Application app = new();
+                RunApp app = new();
                 using var subkey = key.OpenSubKey(subkeyName);
                 if (subkey == null) continue;
                 app.DisplayName = subkey.GetValue("DisplayName") as string;
@@ -45,6 +46,29 @@ public class Application
         }
 
         return applications;
+    }
+    
+    public static void RunApplication(string? appName, List<RunApp> applications)
+    {
+        if (appName == null) return;
+        foreach (var app in applications
+                     .Where(app => app.DisplayName!.Contains(appName, StringComparison.OrdinalIgnoreCase)))
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(app.Path))
+                {
+                    Process.Start(app.Path!);
+                    Console.WriteLine($"{appName} is started!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error with starting of {appName}: {ex.Message}");
+            }
+
+            break;
+        }
     }
 }
 #pragma warning restore CA1416
