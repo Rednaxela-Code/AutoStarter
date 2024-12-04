@@ -26,7 +26,7 @@ public class ApplicationServiceTests
             {
                 @"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall", new Dictionary<string, string>
                 {
-                    { "SubKey3", "TestApp3|C:\\TestPath3|C:\\TestPath3\\app.exe" }
+                    { "SubKey3", @"TestApp3|C:\TestPath3|C:\TestPath3\app.exe" }
                 }
             }
         };
@@ -53,8 +53,8 @@ public class ApplicationServiceTests
         // Arrange
         var applications = new List<Application>
         {
-            new Application { DisplayName = "TestApp1", Path = "C:\\TestPath1\\app.exe" },
-            new Application { DisplayName = "TestApp2", Path = "C:\\TestPath2\\app.exe" }
+            new Application { DisplayName = "TestApp1", Path = @"C:\TestPath1\app.exe" },
+            new Application { DisplayName = "TestApp2", Path = @"C:\TestPath2\app.exe" }
         };
 
         var mockProcess = new Mock<IProcess>();
@@ -68,7 +68,7 @@ public class ApplicationServiceTests
         service.RunApplication("TestApp1", applications);
 
         // Assert
-        mockProcess.Verify(p => p.Start("C:\\TestPath1\\app.exe"), Times.Once);
+        mockProcess.Verify(p => p.Start(@"C:\TestPath1\app.exe"), Times.Once);
     }
 
 
